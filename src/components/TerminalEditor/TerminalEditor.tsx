@@ -6,7 +6,6 @@ import Text from '@tiptap/extension-text'
 import { Node } from '@tiptap/core'
 
 import styled from 'styled-components';
-import { useState } from 'react';
 
 
 const EditorContainer = styled.div`
@@ -32,7 +31,6 @@ declare module '@tiptap/core' {
 }
 
 export interface CLIOptions {
-    // for custom styling
     HTMLAttributes: Record<string, any>,
 }
 
@@ -41,9 +39,6 @@ const CLI = Node.create<{}, CLIOptions>({
     content: 'text*',
     marks: '',
     group: 'block list',
-
-    // isolating: true,
-    // defining: true,
 
     renderHTML({ HTMLAttributes }) {
         return ['pre', 'vasudevn@hyd008:~$ ', ['code', HTMLAttributes, 0],]
@@ -84,8 +79,8 @@ const CLI = Node.create<{}, CLIOptions>({
 
 })
 
-
-const TerminalEditor = () => {
+// write interface for editor props
+const TerminalEditor = ({...props}: any) => {
 
     const editor = useEditor({
         extensions: [
@@ -96,6 +91,7 @@ const TerminalEditor = () => {
         ],
         onUpdate() {
             editor?.commands.toggleTerminal();
+            if(props.onUpdate) props.onUpdate({editor});
         },
 
         onCreate() {
