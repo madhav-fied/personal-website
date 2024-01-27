@@ -1,15 +1,21 @@
-import { useState } from "react";
 import TerminalEditor from "./TerminalEditor/TerminalEditor";
+import { Dropdown } from "./Dropdown/Dropdown";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const Home = () => {
-    const [content, setContent] = useState('');
-
-    const handleUpdate = ({editor}: any) => {
-        console.log(editor.getHTML());
-    }
+    const mode = useSelector((state: RootState) => state.mode.value);
 
     return (
-       <TerminalEditor onUpdate={handleUpdate}/>
+        <>  
+            {
+               mode ? (
+                    <Dropdown>
+                        <TerminalEditor />
+                    </Dropdown>
+                ) : (null)
+            }
+        </>
     )
 }
 

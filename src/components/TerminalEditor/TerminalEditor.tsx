@@ -6,6 +6,8 @@ import Text from '@tiptap/extension-text'
 import { Node } from '@tiptap/core'
 
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { updateEditorContent } from '../../app/reducers/editorSlice';
 
 
 const EditorContainer = styled.div`
@@ -76,11 +78,11 @@ const CLI = Node.create<{}, CLIOptions>({
             'Enter': () => this.editor.commands.execute(),
         }
     },
-
 })
 
 // write interface for editor props
-const TerminalEditor = ({...props}: any) => {
+const TerminalEditor = () => {
+    const dispatch = useDispatch()
 
     const editor = useEditor({
         extensions: [
@@ -91,7 +93,7 @@ const TerminalEditor = ({...props}: any) => {
         ],
         onUpdate() {
             editor?.commands.toggleTerminal();
-            if(props.onUpdate) props.onUpdate({editor});
+            dispatch(updateEditorContent(editor?.getText())); 
         },
 
         onCreate() {

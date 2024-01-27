@@ -1,5 +1,8 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { RootState } from "../app/store";
+import { switchMode } from "../app/reducers/modeSlice";
 
 
 const NavbarRoot = styled.div`
@@ -8,7 +11,7 @@ const NavbarRoot = styled.div`
   justify-content: space-between;
   padding: 0.5rem 4rem;
   border-bottom: 1px solid black;
-  
+  position: relative; 
 `;
 
 const NavbarHeader = styled.div`
@@ -19,15 +22,27 @@ const NavbarHeader = styled.div`
   justify-content: center;
 `;
 
+const ModeButton = styled.button`
+
+`;
+
+const NavbarHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  gap: 1.5rem;
+  justify-content: space-between;
+  position: relative;
+`;
+
 
 const NavbarModulesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  
   padding: 0.5rem;
   gap: 0.5rem;
   justify-content: right;
-
+  position: relative;
 `;
 
 const NavbarModule = styled.button`
@@ -49,17 +64,31 @@ const NavbarModule = styled.button`
 
 function Navbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const mode = useSelector((state: RootState) => state.mode.value)
+
+  const changeMode = () => {
+    dispatch(switchMode());
+  }
 
   return (
     <>
       <NavbarRoot>
-      <NavbarHeader>Narasiman Vasudevan</NavbarHeader>
-      <NavbarModulesContainer>
-        <NavbarModule onClick={() => navigate("/")}>Home</NavbarModule>
-        <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
-        <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>
-        <NavbarModule onClick={() => navigate("/contact")}>Contact</NavbarModule>
-      </NavbarModulesContainer>
+        <NavbarHeaderContainer>      
+          <NavbarHeader onClick={() => navigate("/")}>Narasiman Vasudevan</NavbarHeader>
+          <ModeButton onClick={changeMode}>Shell Mode</ModeButton>
+        </NavbarHeaderContainer>
+
+        {
+          mode ? (
+            <NavbarModulesContainer>
+              <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
+              <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>
+              <NavbarModule onClick={() => navigate("/contact")}>Contact</NavbarModule>
+            </NavbarModulesContainer>
+          ) : null
+        }
+
       </NavbarRoot>
     </>
   )
