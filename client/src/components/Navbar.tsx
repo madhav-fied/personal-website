@@ -22,10 +22,6 @@ const NavbarHeader = styled.div`
   justify-content: center;
 `;
 
-const ModeButton = styled.button`
-
-`;
-
 const NavbarHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -67,7 +63,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const mode = useSelector((state: RootState) => state.mode.value)
 
-  const changeMode = () => {
+  const changeMode = async() => {
     dispatch(switchMode());
   }
 
@@ -76,11 +72,11 @@ function Navbar() {
       <NavbarRoot>
         <NavbarHeaderContainer>      
           <NavbarHeader onClick={() => navigate("/")}>Narasiman Vasudevan</NavbarHeader>
-          <ModeButton onClick={changeMode}>Shell Mode</ModeButton>
+          <NavbarModule onClick={changeMode}>Shell Mode</NavbarModule>
         </NavbarHeaderContainer>
 
         {
-          mode ? (
+          !mode ? (
             <NavbarModulesContainer>
               <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
               <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>

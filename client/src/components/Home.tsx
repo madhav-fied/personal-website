@@ -5,6 +5,7 @@ import { RootState } from "../app/store";
 
 const Home = () => {
     const mode = useSelector((state: RootState) => state.mode.value);
+    const editor = useSelector((state: RootState) => state.editor.content);
 
     return (
         <>  
@@ -15,6 +16,9 @@ const Home = () => {
                     </Dropdown>
                 ) : (null)
             }
+            <h3>
+                {editor}
+            </h3>
         </>
     )
 }
