@@ -4,9 +4,12 @@ import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
 
 import { Node } from '@tiptap/core'
+import axios from 'axios'
 
 import styled from 'styled-components';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEditorContent } from '../../app/reducers/editorSlice';
+import { RootState } from '../../app/store';
 
 const EditorContainer = styled.div`
     border: 1px solid black;
@@ -15,9 +18,21 @@ const EditorContainer = styled.div`
     padding: 2rem;
     margin: 1rem; 
 
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+
+    div {
+        width: 95%;
+    }
+
     .tiptap {
         border: 1px solid red;
     }
+`;
+
+const ExecuteButton = styled.input`
+
 `;
 
 declare module '@tiptap/core' {
@@ -38,7 +53,9 @@ const CLI = Node.create<{}, CLIOptions>({
     name: 'CLI',
     content: 'text*',
     marks: '',
-    group: 'block list',
+    group: 'block',
+
+
 
     renderHTML({ HTMLAttributes }) {
         return ['pre', 'vasudevn@hyd008:~$ ', ['code', HTMLAttributes, 0],]
@@ -58,12 +75,11 @@ const CLI = Node.create<{}, CLIOptions>({
             clearTerminal:
                 () => ({ }) => {
 
-                    this.editor.chain().focus().clearContent().toggleTerminal().run();
+                    this.editor.chain().focus().clearContent(true).run();
                     return true;
                 },
             execute:
                 () => ({ }) => {
-                    this.editor.chain().focus().clearContent().toggleTerminal().run();
                     return true;
                 }
         }
@@ -76,11 +92,12 @@ const CLI = Node.create<{}, CLIOptions>({
             'Enter': () => this.editor.commands.execute(),
         }
     },
-
 })
 
 // write interface for editor props
-const TerminalEditor = ({...props}: any) => {
+const TerminalEditor = () => {
+    const dispatch = useDispatch();
+    const editorContent = useSelector((state: RootState) => state.editor.content);
 
     const editor = useEditor({
         extensions: [
@@ -91,7 +108,7 @@ const TerminalEditor = ({...props}: any) => {
         ],
         onUpdate() {
             editor?.commands.toggleTerminal();
-            if(props.onUpdate) props.onUpdate({editor});
+            dispatch(updateEditorContent(editor?.getText()));
         },
 
         onCreate() {
@@ -103,10 +120,23 @@ const TerminalEditor = ({...props}: any) => {
         },
     });
 
+    const handleEnter = async (event: any) => {
+        if (event.key === "Enter") {
+            console.log('Req sending')
+            const response = await axios.post("/api/cmd", {
+                data: editorContent,
+            });
+            console.log(response);
+        }
+    }
+
     return (
-        <EditorContainer>
-            <EditorContent editor={editor} />
-        </EditorContainer>
+        <>
+            <EditorContainer onKeyDownCapture={handleEnter}>
+                <EditorContent editor={editor} />
+                <ExecuteButton type="submit" value="Execute" onClick={handleEnter} />
+            </EditorContainer>
+        </>
     )
 }
 
