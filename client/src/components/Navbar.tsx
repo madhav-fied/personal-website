@@ -7,19 +7,22 @@ import { switchMode } from "../app/reducers/modeSlice";
 
 const NavbarRoot = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.5rem 4rem;
+  // flex-direction: row;
+  // justify-content: space-between;
+  // padding: 0.5rem 4rem;
   border-bottom: 1px solid black;
-  position: relative; 
+  position: relative;
+  flex-direction: column;
+  justify-content: space-evenly; 
+  padding-bottom: 1rem;
 `;
 
 const NavbarHeader = styled.div`
-  font-size: 3em;
+  // for old
+  // font-size: 3em;
   
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 2em;
+  margin: auto;
 `;
 
 const NavbarHeaderContainer = styled.div`
@@ -35,27 +38,33 @@ const NavbarHeaderContainer = styled.div`
 const NavbarModulesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0.5rem;
-  gap: 0.5rem;
+  gap: 1rem;
   justify-content: right;
-  position: relative;
-`;
+  margin: auto;
+  `;
 
 const NavbarModule = styled.button`
   outline: none;
   box-shadow: none;
 
-  height: 4rem;
-  width: 8rem;   
   border-radius: 10%;
   text-align: center;
-  border: 0.5rem solid rgb(0,0,0);
+  border: 0.1rem solid rgb(0,0,0);
   background: rgb(256,256,256);
   color: rgb(0,0,0);
+  width: 4rem;
+  height: 2 rem;
+  
+  // for old
+  // height: 4rem;
+  // width: 8rem;   
 
   &:hover {
-    background: #ff6e42;
+    // background: #ff6e42;
+    color: rgb(256,256,256);
+    background: rgb(0,0,0);
   }
+
 `;
 
 function Navbar() {
@@ -71,8 +80,8 @@ function Navbar() {
     <>
       <NavbarRoot>
         <NavbarHeaderContainer>      
-          <NavbarHeader onClick={() => navigate("/")}>Narasiman Vasudevan</NavbarHeader>
-          <NavbarModule onClick={changeMode}>Shell Mode</NavbarModule>
+          <NavbarHeader onClick={() => navigate("/")}>Satori Collectives</NavbarHeader>
+          {/* <NavbarModule onClick={changeMode}>Shell Mode</NavbarModule> */}
         </NavbarHeaderContainer>
 
         {
@@ -80,6 +89,7 @@ function Navbar() {
             <NavbarModulesContainer>
               <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
               <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>
+              <NavbarModule onClick={() => navigate("/work")}>Work</NavbarModule>
               <NavbarModule onClick={() => navigate("/contact")}>Contact</NavbarModule>
             </NavbarModulesContainer>
           ) : null
