@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Blog from "./components/Blog";
+import Navbar from "./components/Navbar/Navbar";
+import Blog from "./pages/Blog";
 import BlogView from "./components/BlogView/BlogView";
+import About from "./pages/About";
 
 
 interface IRoute {
@@ -12,11 +13,11 @@ interface IRoute {
 const routes: IRoute[] = [
   {
     path: "/" ,
-    element: <h1>About</h1>
+    element: <About />
   },
   {
     path: "/about" ,
-    element: <h1>About</h1>
+    element: <About />
   },
   {
     path: "/blog",

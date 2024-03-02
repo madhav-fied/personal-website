@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import BlogItem from "./BlogItem/BlogItem";
+import BlogItem from "../components/BlogItem/BlogItem";
 
 
 const ListOfBlogs = styled.ul`
