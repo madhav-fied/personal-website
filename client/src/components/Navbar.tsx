@@ -1,8 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { RootState } from "../app/store";
-import { switchMode } from "../app/reducers/modeSlice";
 
 
 const NavbarRoot = styled.div`
@@ -69,31 +66,20 @@ const NavbarModule = styled.button`
 
 function Navbar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const mode = useSelector((state: RootState) => state.mode.value)
-
-  const changeMode = async() => {
-    dispatch(switchMode());
-  }
 
   return (
     <>
       <NavbarRoot>
-        <NavbarHeaderContainer>      
+        <NavbarHeaderContainer>
           <NavbarHeader onClick={() => navigate("/")}>Satori Collectives</NavbarHeader>
-          {/* <NavbarModule onClick={changeMode}>Shell Mode</NavbarModule> */}
         </NavbarHeaderContainer>
 
-        {
-          !mode ? (
-            <NavbarModulesContainer>
-              <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
-              <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>
-              <NavbarModule onClick={() => navigate("/work")}>Work</NavbarModule>
-              <NavbarModule onClick={() => navigate("/contact")}>Contact</NavbarModule>
-            </NavbarModulesContainer>
-          ) : null
-        }
+        <NavbarModulesContainer>
+          <NavbarModule onClick={() => navigate("/about")}>About</NavbarModule>
+          <NavbarModule onClick={() => navigate("/blog")}>Blog</NavbarModule>
+          <NavbarModule onClick={() => navigate("/work")}>Work</NavbarModule>
+          <NavbarModule onClick={() => navigate("/contact")}>Contact</NavbarModule>
+        </NavbarModulesContainer>
 
       </NavbarRoot>
     </>
