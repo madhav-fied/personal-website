@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import LinkedinIcon from "../components/Icons/LinkedInIcon";
-import GithubIcon from "../components/Icons/GithubIcon";
-import MailIcon from "../components/Icons/MailIcon";
+import AboutHeader from "../components/AboutItems/AboutHeader/AboutHeader";
+import CareerExperience from "../components/AboutItems/CareerExperience/CareerExperience";
 
 const Separator = styled.hr`
     border: 0.3rem solid black;
@@ -10,25 +9,25 @@ const Separator = styled.hr`
 `;
 
 const Container = styled.div`
-    width: 60%;
+    width: 50%;
     margin: auto;
     margin-top: 3rem;
     padding: 0.5rem;
-
-    border: 1px solid black;
 `;
+
+const Divider = styled.hr`
+
+`;
+
 
 const About = () => {
 
     return (
         <>
             <Container>
-                <h1>Vanakkam,<br />I am Narasiman</h1>
-                <hr />
-                <h3>Computer Science Engineer</h3>
-                <GithubIcon />
-                <LinkedinIcon />
-                <MailIcon />
+                <AboutHeader />
+                <Divider />
+                <CareerExperience />
             </Container>
             <Separator />
 
