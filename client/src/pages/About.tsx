@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import AboutHeader from "../components/AboutItems/AboutHeader/AboutHeader";
 import CareerExperience from "../components/AboutItems/CareerExperience/CareerExperience";
+import { TechStackDisplay } from "../components/AboutItems/TechStackDisplay/TechStackDisplay";
 
 const Separator = styled.hr`
     border: 0.3rem solid black;
@@ -28,9 +29,10 @@ const About = () => {
                 <AboutHeader />
                 <Divider />
                 <CareerExperience />
+                <Divider />
+                <TechStackDisplay />
             </Container>
             <Separator />
-
         </>
     )
 }
